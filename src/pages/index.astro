@@ -1,0 +1,42 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+
+<Base home={true}>
+  <section class="hero">
+    <h1 class="name">elisa marie diop-weyer</h1>
+    <Nav />
+  </section>
+</Base>
+
+<style>
+  /* home owns the full viewport — no outer main padding */
+  :global(main) {
+    padding: 0;
+  }
+
+  .hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.6rem;
+    text-align: center;
+    padding: var(--pad);
+  }
+
+  .name {
+    font-weight: 400;
+    font-size: 1rem;
+  }
+
+  /* on the home hub the nav stacks vertically and centers (matches the deck) */
+  .hero :global(.nav) {
+    flex-direction: column;
+    gap: 0.45rem;
+    align-items: center;
+  }
+</style>

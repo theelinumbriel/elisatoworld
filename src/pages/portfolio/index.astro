@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro';
+import { projects } from '../../data/projects';
+---
+
+<Base title="portfolio — elisa marie diop-weyer">
+  <section class="portfolio">
+    <h1 class="title">portfolio</h1>
+    <ul class="list">
+      {
+        projects.map((p) => (
+          <li>
+            {p.prefix && <span>{p.prefix}</span>}
+            {p.href ? (
+              <a href={p.href} target={p.external ? '_blank' : undefined} rel={p.external ? 'noopener' : undefined}>{p.name}</a>
+            ) : p.plain ? (
+              <span>{p.name}</span>
+            ) : (
+              <span class="u" title="coming soon">{p.name}</span>
+            )}
+            {p.tagline && <span class="tag"> ({p.tagline})</span>}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .portfolio {
+    min-height: calc(100vh - 9rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .list {
+    list-style: none;
+    margin: 1.4rem 0 0;
+    padding: 0;
+  }
+
+  .list li {
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  .tag {
+    /* parenthetical taglines are roman, never underlined */
+    text-decoration: none;
+  }
+
+  .soon {
+    color: var(--muted);
+    font-style: italic;
+  }
+</style>

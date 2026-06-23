@@ -1,0 +1,127 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="work at the Learning Lab — elisa marie diop-weyer">
+  <article class="ll">
+    <header>
+      <h1 class="title">work at the Learning Lab</h1>
+      <p class="meta">updated 26 october 2025</p>
+    </header>
+
+    <p class="lede">highlights</p>
+
+    <section>
+      <h2 class="course">TS 280 — python notebooks</h2>
+      <p>
+        developed a suite of notebooks, including simple chat completions with
+        GPT + ElevenLabs API to input a text, choose a target language, and
+        output audio in that language — alongside more conceptual notebooks:
+      </p>
+      <ul>
+        <li>
+          <span class="u">ping-pong:</span> repeatedly translating from language a
+          to language b and tracking the convergence of the translation;
+        </li>
+        <li>
+          <span class="u">telephone:</span> translating from language a to b to c
+          to d and then to the target language, evaluating how the intermediary
+          translations impact the output;
+        </li>
+        <li>
+          <span class="u">thematic focus + iteration</span> — built with a
+          professional translator to mimic his process: a first set of
+          completions creates "context" strings focused on cultural context,
+          authorship, and etymology; those strings + the original text are passed
+          through a completion that returns a structured output with the
+          translation and its strengths and weaknesses. context + the three
+          outputs are then iterated, so completion <em>t</em> corrects the
+          weakness of completion <em>t&minus;1</em>. the final translation is
+          compared to a canonical, human translation. final output = final
+          translation + json of strengths/weaknesses of each intermediate
+          translation + comparison to the canonical.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="course">GENED 1196 — python notebooks</h2>
+      <p>
+        prototyped an "AI-proof" oral assignment. generated visuals (tarot cards
+        with imagery + titles tied to core concepts, approaches, and case
+        studies); prototyped a next.js file using the OpenAI realtime API to
+        stream audio from student responses and generate follow-up questions
+        live. a selection mechanism produced an initial series of follow-ups, a
+        "judge" picked the top three, and a RAG chat completion over the syllabus
+        + rubric chose what most needed elaboration based on the top follow-ups
+        and the course material.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="course">MUSIC 250HFA — python notebooks</h2>
+      <p>
+        developed a suite of notebooks using librosa and matplotlib to visualize
+        musical snippets with 2D and 3D spectrograms, and to compare audio across
+        different covers of the same song — e.g. visualizing how far different
+        musicians emphasize different syllables in the same lyric.
+      </p>
+    </section>
+
+    <section>
+      <h2 class="course">MOD HEB 241R — python notebook</h2>
+      <p>
+        built a notebook using OpenAI chat completions with structured outputs
+        and OpenAI's Whisper API to help students edit videos. the notebook took
+        a prompt — e.g. "discussions of environmental policy" — and output a cut
+        of every snippet where the video matched the prompt.
+      </p>
+    </section>
+
+    <p class="back"><a href="/portfolio">← portfolio</a></p>
+  </article>
+</Base>
+
+<style>
+  .ll {
+    max-width: 46rem;
+  }
+
+  .ll header {
+    margin-bottom: 1.8rem;
+  }
+
+  .meta {
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .lede {
+    font-style: italic;
+    margin-bottom: 1.4rem;
+  }
+
+  .ll section {
+    margin-bottom: 1.8rem;
+  }
+
+  .course {
+    font-weight: 400;
+    font-size: 1rem;
+    font-style: italic;
+    margin-bottom: 0.4rem;
+  }
+
+  .ll ul {
+    margin: 0.6rem 0 0;
+    padding-left: 1.4rem;
+  }
+
+  .ll li {
+    margin-bottom: 0.6rem;
+  }
+
+  .back {
+    margin-top: 2.5rem;
+  }
+</style>

@@ -1,0 +1,122 @@
+/* elisa marie diop-weyer — portfolio
+   design tokens lifted from portfolio.pptx:
+   white background, black text, helvetica neue, uniform ~18pt, italic titles,
+   underlines as styling, generous whitespace. casing is intentional (authored
+   verbatim) — do NOT force lowercase. */
+
+:root {
+  --bg: #ffffff;
+  --fg: #000000;
+  --muted: #8a8a8a;
+  --pad: clamp(1.5rem, 4vw, 3rem);
+  --maxw: 60rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* base size echoes the deck's 18pt; nudges down a touch on small screens */
+  font-size: clamp(16px, 1.1vw + 13px, 19px);
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  opacity: 0.55;
+}
+
+/* uniform size, never bold — the deck is one weight, one size */
+h1,
+h2,
+h3 {
+  font-weight: 400;
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* italic page title, lifted straight from the deck */
+.title {
+  font-style: italic;
+}
+
+/* an underlined word that is not (yet) a link — matches the deck's styled
+   underlines (affiliations, project names before they go live) */
+.u {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+p {
+  margin: 0;
+}
+
+/* ---- shared chrome (inner pages) ---- */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem 2rem;
+  flex-wrap: wrap;
+  padding: var(--pad);
+}
+
+.brand {
+  text-decoration: none;
+}
+
+.brand:hover {
+  text-decoration: underline;
+  opacity: 1;
+}
+
+main {
+  padding: 0 var(--pad) var(--pad);
+}
+
+/* ---- nav ---- */
+
+.nav {
+  display: flex;
+  gap: 1.1rem;
+  font-style: italic;
+}
+
+.nav a {
+  text-decoration: none;
+}
+
+.nav a:hover,
+.nav a[aria-current="page"] {
+  text-decoration: underline;
+  opacity: 1;
+}

@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="contact — elisa marie diop-weyer">
+  <section class="contact">
+    <div class="block">
+      <h1 class="title">contact</h1>
+      <p>
+        email: <a href="mailto:elisadiopweyer@college.harvard.edu"
+          >elisadiopweyer@college.harvard.edu</a
+        > / <a href="mailto:contactemdw@gmail.com">contactemdw@gmail.com</a>
+      </p>
+      <p>
+        github: <a href="https://github.com/theelinumbriel" target="_blank" rel="noopener"
+          >theelinumbriel</a
+        >
+      </p>
+      <p>
+        X: <a href="https://x.com/ign0rethepit" target="_blank" rel="noopener">ign0rethepit</a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* contact sits bottom-right, right-aligned — straight from the deck */
+  .contact {
+    min-height: calc(100vh - 9rem);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .block p {
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 560px) {
+    .contact {
+      align-items: flex-start;
+      justify-content: flex-start;
+      text-align: left;
+    }
+  }
+</style>

@@ -1,0 +1,14 @@
+# build output
+dist/
+# dependencies
+node_modules/
+# generated types
+.astro/
+# environment
+.env
+.env.production
+.env.local
+# vercel
+.vercel
+# macOS
+.DS_Store

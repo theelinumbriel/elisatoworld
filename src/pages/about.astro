@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="about — elisa marie diop-weyer">
+  <section class="about">
+    <div class="text">
+      <h1 class="title">about</h1>
+      <p>20 years old</p>
+      <p>right-handed</p>
+      <p>swiss, french, mauritanian</p>
+      <p>
+        current undergrad at harvard (class of 2027; double concentration in
+        economics and human biology, behavior and evolution)
+      </p>
+      <p class="indent">editor-in-chief of the <span class="u">harvard review of philosophy</span></p>
+      <p class="indent">genAI fellow at the <span class="u">Learning Lab</span></p>
+      <p class="indent">research assistant at <span class="u">metaLAB @ Berkman Klein</span></p>
+      <p class="indent"><span class="u">school for moral ambition</span> fellow</p>
+      <p>fluent in: french, english</p>
+      <p>cities frequented: geneva, new york, dar es salaam, harare, boston</p>
+      <p>
+        interested in: digital products, generative AI, education, biotech, text
+        production, &amp;c
+      </p>
+      <p>Norman Rush enjoyer</p>
+      <p>evidently qualms capital letters (apologies)</p>
+    </div>
+    <img
+      class="portrait"
+      src="/portrait.jpg"
+      width="560"
+      height="560"
+      alt="elisa marie diop-weyer"
+      loading="lazy"
+    />
+  </section>
+</Base>
+
+<style>
+  .about {
+    position: relative;
+    min-height: calc(100vh - 9rem);
+  }
+
+  .text {
+    max-width: 46rem;
+  }
+
+  .text p {
+    margin: 0;
+  }
+
+  /* the four affiliation lines are indented in the deck */
+  .indent {
+    padding-left: 7.5rem;
+  }
+
+  .portrait {
+    width: clamp(180px, 24vw, 280px);
+    height: auto;
+    margin-top: 2.5rem;
+    display: block;
+    filter: grayscale(1);
+  }
+
+  /* on a wide viewport the portrait sits bottom-right, as in the deck */
+  @media (min-width: 800px) {
+    .portrait {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      margin-top: 0;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .indent {
+      padding-left: 1.5rem;
+    }
+  }
+</style>
