@@ -1,4 +1,12 @@
 ---
+interface Props {
+  /** when true, each link carries a view-transition-name so the clicked word
+      morphs into the destination page's title. Only the home hub opts in —
+      the inner-page top bar must NOT, or names would collide on the page. */
+  morph?: boolean;
+}
+const { morph = false } = Astro.props;
+
 const links = [
   ['/portfolio', 'portfolio'],
   ['/cv', 'cv'],
@@ -12,7 +20,11 @@ const isActive = (href: string) =>
 <nav class="nav">
   {
     links.map(([href, label]) => (
-      <a href={href} aria-current={isActive(href) ? 'page' : undefined}>
+      <a
+        href={href}
+        aria-current={isActive(href) ? 'page' : undefined}
+        style={morph ? `view-transition-name: nav-${label}` : undefined}
+      >
         {label}
       </a>
     ))

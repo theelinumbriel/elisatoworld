@@ -12,3 +12,5 @@ node_modules/
 .vercel
 # macOS
 .DS_Store
+# throwaway design mockups
+mockups/

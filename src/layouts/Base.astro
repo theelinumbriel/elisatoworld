@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
 
 interface Props {
@@ -25,6 +26,7 @@ const {
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>{title}</title>
+    <ClientRouter />
   </head>
   <body>
     {

@@ -120,3 +120,28 @@ main {
   text-decoration: underline;
   opacity: 1;
 }
+
+/* ---- view transitions: the "title morph" ----
+   the clicked menu word shares a view-transition-name with the destination
+   page's title, so the browser tweens it from the centered menu to the
+   top-left heading while the rest of the page cross-fades. */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-group(*) {
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.42s;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+
+/* honour reduced-motion: snap instantly, no animation */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
