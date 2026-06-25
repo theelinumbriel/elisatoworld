@@ -46,11 +46,14 @@ const {
       // #edit is present, so elisa can edit the site's copy in place, then "copy
       // changes" to paste back into source. invisible to normal visitors.
       (function () {
-        var on = /(?:^|[?&#])edit(?:=1)?(?:&|$)/.test(location.search) ||
-          location.hash.replace('#', '') === 'edit';
+        var p = location.pathname.replace(/\/+$/, '');
+        var on = /[?&]edit(?:=1)?(?:&|$)/.test(location.search) ||
+          location.hash.replace('#', '') === 'edit' ||
+          /(?:^|\/)edit$/.test(p); // supports /edit and /<page>/edit (via vercel rewrite)
         if (on) {
           var s = document.createElement('script');
           s.src = '/inline.js';
+          s.setAttribute('data-auto', '1');
           document.body.appendChild(s);
         }
       })();
