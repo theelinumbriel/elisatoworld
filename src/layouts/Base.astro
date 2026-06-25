@@ -41,6 +41,21 @@ const {
       <slot />
     </main>
 
+    <script is:inline>
+      // inline editor (the "inline" project, dogfooded): load only when ?edit or
+      // #edit is present, so elisa can edit the site's copy in place, then "copy
+      // changes" to paste back into source. invisible to normal visitors.
+      (function () {
+        var on = /(?:^|[?&#])edit(?:=1)?(?:&|$)/.test(location.search) ||
+          location.hash.replace('#', '') === 'edit';
+        if (on) {
+          var s = document.createElement('script');
+          s.src = '/inline.js';
+          document.body.appendChild(s);
+        }
+      })();
+    </script>
+
     <script>
       // wired once on document; survives Astro view-transition (SPA) navigations.
       const w = window as unknown as { __emdwWired?: boolean };
