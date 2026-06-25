@@ -24,25 +24,17 @@ import Base from '../layouts/Base.astro';
 </Base>
 
 <style>
-  /* contact sits bottom-right, right-aligned — straight from the deck */
-  .contact {
-    min-height: calc(100vh - 9rem);
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-    text-align: right;
+  /* title sits top-left so the menu morph lands consistently across pages */
+  .block {
+    max-width: 46rem;
+  }
+
+  .block .title {
+    margin-bottom: 0.9rem;
   }
 
   .block p {
     margin: 0;
     line-height: 1.7;
-  }
-
-  @media (max-width: 560px) {
-    .contact {
-      align-items: flex-start;
-      justify-content: flex-start;
-      text-align: left;
-    }
   }
 </style>

@@ -13,11 +13,21 @@ export interface Project {
   external?: boolean;
   soon?: boolean;
   plain?: boolean;
+  /** optional "why this exists" note, revealed on click */
+  rationale?: string;
 }
 
 export const projects: Project[] = [
   { name: 'maxims', tagline: 'pinterest for words', href: null, external: true, soon: true },
-  { name: 'helloword', tagline: 'name is provisional', href: null, external: true, soon: true },
+  {
+    name: 'helloword',
+    tagline: 'name is provisional',
+    href: null,
+    external: true,
+    soon: true,
+    rationale:
+      "i take issue with a lot about the collective slide into vibecoding — but with markdown specifically, two things. one: i believe in keeping a human in the loop, so i like to actually read claude's markdown output, and vscode / windsurf are not a pleasant place to view or edit markdown. two: i want more formatting in markdown than they allow — colour, highlighting, and the like. helloword fixes both: it's basically microsoft word for markdown. surprised it didn't already exist. now it does — yay.",
+  },
   {
     name: 'vox',
     tagline: 'name is provisional and probably a copyright issue',

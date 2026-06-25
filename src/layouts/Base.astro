@@ -40,5 +40,36 @@ const {
     <main>
       <slot />
     </main>
+
+    <script>
+      // wired once on document; survives Astro view-transition (SPA) navigations.
+      const w = window as unknown as { __emdwWired?: boolean };
+      if (!w.__emdwWired) {
+        w.__emdwWired = true;
+
+        // portfolio: reveal a project's rationale (quiet accordion)
+        document.addEventListener('click', (e) => {
+          const btn = (e.target as HTMLElement).closest('.why') as HTMLButtonElement | null;
+          if (!btn) return;
+          const proj = btn.closest('.proj') as HTMLElement | null;
+          if (!proj) return;
+          const open = proj.toggleAttribute('data-open');
+          btn.setAttribute('aria-expanded', String(open));
+        });
+
+        // portfolio: feedback box -> straight to elisa's inbox (no noreply black box)
+        document.addEventListener('submit', (e) => {
+          const form = e.target as HTMLElement;
+          if (!form.classList.contains('fb-form')) return;
+          e.preventDefault();
+          const ta = form.querySelector('.fb-text') as HTMLTextAreaElement | null;
+          const body = (ta?.value || '').trim();
+          if (!body) return;
+          const subject = encodeURIComponent('elisatoworld — bug / feedback');
+          window.location.href =
+            `mailto:contactemdw@gmail.com?subject=${subject}&body=${encodeURIComponent(body)}`;
+        });
+      }
+    </script>
   </body>
 </html>

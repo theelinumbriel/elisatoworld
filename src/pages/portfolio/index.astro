@@ -8,30 +8,64 @@ import { projects } from '../../data/projects';
     <h1 class="title" style="view-transition-name: nav-portfolio">portfolio</h1>
     <ul class="list">
       {
-        projects.map((p) => (
-          <li>
-            {p.prefix && <span>{p.prefix}</span>}
-            {p.href ? (
-              <a href={p.href} target={p.external ? '_blank' : undefined} rel={p.external ? 'noopener' : undefined}>{p.name}</a>
-            ) : p.plain ? (
-              <span>{p.name}</span>
-            ) : (
-              <span class="u" title="coming soon">{p.name}</span>
+        projects.map((p, i) => (
+          <li class="proj">
+            <div class="row">
+              {p.prefix && <span>{p.prefix}</span>}
+              {p.href ? (
+                <a
+                  href={p.href}
+                  target={p.external ? '_blank' : undefined}
+                  rel={p.external ? 'noopener' : undefined}
+                >
+                  {p.name}
+                </a>
+              ) : p.plain ? (
+                <span>{p.name}</span>
+              ) : (
+                <span class="u" title="coming soon">{p.name}</span>
+              )}
+              {p.tagline && <span class="tag"> ({p.tagline})</span>}
+              {p.rationale && (
+                <button class="why" type="button" aria-expanded="false" aria-controls={`r-${i}`}>
+                  why<span class="caret" aria-hidden="true">›</span>
+                </button>
+              )}
+            </div>
+            {p.rationale && (
+              <div class="rationale" id={`r-${i}`}>
+                <div class="rationale-inner">
+                  <p>{p.rationale}</p>
+                </div>
+              </div>
             )}
-            {p.tagline && <span class="tag"> ({p.tagline})</span>}
           </li>
         ))
       }
     </ul>
+
+    <section class="feedback" aria-label="report a bug">
+      <p class="fb-note">
+        if you happen to use these and run into a bug, please let me know. i promise this
+        box doesn't go to a noreply black box — it lands straight in my inbox, and i'll
+        fix it. thanks :)
+      </p>
+      <form class="fb-form">
+        <textarea
+          class="fb-text"
+          rows="3"
+          placeholder="found a bug? tell me what happened…"
+          required></textarea>
+        <button class="fb-send" type="submit">send</button>
+      </form>
+    </section>
   </section>
 </Base>
 
 <style>
+  /* title is a top-left heading so the menu morph always lands in the same place */
   .portfolio {
-    min-height: calc(100vh - 9rem);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    padding-top: 0.5rem;
   }
 
   .list {
@@ -40,18 +74,108 @@ import { projects } from '../../data/projects';
     padding: 0;
   }
 
-  .list li {
+  .proj {
     margin: 0;
+  }
+
+  .row {
     line-height: 1.7;
   }
 
   .tag {
-    /* parenthetical taglines are roman, never underlined */
     text-decoration: none;
   }
 
-  .soon {
-    color: var(--muted);
+  /* the rationale toggle: a quiet italic "why" + a caret that rotates open */
+  .why {
+    font: inherit;
     font-style: italic;
+    color: var(--muted);
+    background: none;
+    border: 0;
+    padding: 0 0 0 0.55rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .why:hover {
+    color: var(--fg);
+  }
+  .caret {
+    display: inline-block;
+    margin-left: 0.25rem;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .proj[data-open] .caret {
+    transform: rotate(90deg);
+  }
+
+  /* smooth height reveal via animating grid rows (0fr -> 1fr) */
+  .rationale {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .proj[data-open] .rationale {
+    grid-template-rows: 1fr;
+  }
+  .rationale-inner {
+    overflow: hidden;
+  }
+  .rationale-inner p {
+    margin: 0;
+    padding: 0.6rem 0 0.9rem;
+    max-width: 42rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* feedback box */
+  .feedback {
+    margin-top: 3.5rem;
+    max-width: 42rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 1.4rem;
+  }
+  .fb-note {
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0 0 0.9rem;
+  }
+  .fb-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    align-items: flex-start;
+  }
+  .fb-text {
+    width: 100%;
+    font: inherit;
+    color: var(--fg);
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.18);
+    border-radius: 2px;
+    padding: 0.7rem 0.8rem;
+    resize: vertical;
+    outline: none;
+  }
+  .fb-text:focus {
+    border-color: var(--fg);
+  }
+  .fb-text::placeholder {
+    color: var(--muted);
+  }
+  .fb-send {
+    font: inherit;
+    font-style: italic;
+    color: var(--fg);
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .fb-send:hover {
+    opacity: 0.55;
   }
 </style>

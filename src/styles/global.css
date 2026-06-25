@@ -81,13 +81,29 @@ p {
 
 /* ---- shared chrome (inner pages) ---- */
 
+/* sticky "liquid glass" top bar — stays visible on scroll, frosts the content
+   sliding beneath it. */
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  gap: 1.5rem 2rem;
+  gap: 1rem 2rem;
   flex-wrap: wrap;
-  padding: var(--pad);
+  padding: 1.05rem var(--pad);
+  background: rgba(255, 255, 255, 0.62);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* progressive enhancement: a touch more presence where backdrop-filter is supported */
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .topbar {
+    background: rgba(255, 255, 255, 0.55);
+  }
 }
 
 .brand {
@@ -100,7 +116,7 @@ p {
 }
 
 main {
-  padding: 0 var(--pad) var(--pad);
+  padding: 2.4rem var(--pad) var(--pad);
 }
 
 /* ---- nav ---- */
