@@ -22,9 +22,8 @@ export const projects: Project[] = [
   {
     name: 'helloword',
     tagline: 'name is provisional',
-    href: null,
+    href: 'https://theelinumbriel.github.io/helloword/',
     external: true,
-    soon: true,
     rationale:
       "i take issue with a lot about the collective slide into vibecoding — but with markdown specifically, two things. one: i believe in keeping a human in the loop, so i like to actually read claude's markdown output, and vscode / windsurf are not a pleasant place to view or edit markdown. two: i want more formatting in markdown than they allow — colour, highlighting, and the like. helloword fixes both: it's basically microsoft word for markdown. surprised it didn't already exist. now it does — yay.",
   },
