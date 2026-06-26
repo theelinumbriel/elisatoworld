@@ -151,6 +151,18 @@ main {
     animation-duration: 0.42s;
     animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   }
+  /* the menu word and its destination title are the same size (1rem). pin the morph
+     snapshots to their natural size — never stretched to fill the tween box — so the
+     word glides to its spot at a constant size instead of scaling/"exploding". */
+  ::view-transition-old(nav-portfolio),
+  ::view-transition-new(nav-portfolio),
+  ::view-transition-old(nav-about),
+  ::view-transition-new(nav-about),
+  ::view-transition-old(nav-contact),
+  ::view-transition-new(nav-contact) {
+    object-fit: none;
+    object-position: left top;
+  }
 }
 
 /* honour reduced-motion: snap instantly, no animation */

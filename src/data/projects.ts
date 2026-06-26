@@ -18,7 +18,7 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-  { name: 'maxims', tagline: 'pinterest for words', href: null, external: true, soon: true },
+  { name: 'maxims', tagline: 'pinterest for words', href: 'https://theelinumbriel.github.io/maxims-public/', external: true },
   {
     name: 'helloword',
     tagline: 'name is provisional',
@@ -33,8 +33,9 @@ export const projects: Project[] = [
     href: null,
     external: true,
     soon: true,
+    rationale:
+      'NO MORE BAD AI GENERATED TEXT. THIS IS GOOD AI GENERATED TEXT. you curate a corpus of text you like, this extracts geometric relationships between tokens in this corpus at the clause level, then for any plain text prompt (like you would with chatgpt, e.g. write me a one pager on XYZ), you get an actually good text output. this is byok for now! also please shoot me an email re how you feel about AI and text production broadly',
   },
-  { name: 'etch', tagline: 'the etch in sketch', href: null, external: true, soon: true },
   {
     name: 'inline',
     tagline: 'i hate vibe coded slop',
@@ -43,7 +44,15 @@ export const projects: Project[] = [
     rationale:
       "in our vibecode apocalypse, when you want to change a bit of text on your web app or whatever, you have to go edit the file yourself in vscode or prompt your llm to change it. obviously it'd be easier to just edit it inline — so that's what this does. drop the one inline.js onto any page, add ?edit to the url (or press ⌘/ctrl+shift+e), and click any text to edit it in place; hit save to write it straight back to the source file (via the tiny included server), or 'copy changes' to grab the edits as json. (this very site runs it — add ?edit to any page.)",
   },
-  { name: 'oystr', prefix: '(the world is your) ', href: null, external: true, soon: true },
+  {
+    name: 'oystr',
+    prefix: '(the world is your) ',
+    href: null,
+    external: true,
+    soon: true,
+    rationale:
+      'developed a prototype in Xcode using the OpenAI API to generate virtual reality elements from natural language prompts, for applications in gaming. shoot me an email for a demo :)',
+  },
   { name: 'work at the Learning Lab', href: '/portfolio/learning-lab' },
   { name: '&c', href: null, plain: true },
 ];

@@ -11,21 +11,23 @@ import { projects } from '../../data/projects';
         projects.map((p, i) => (
           <li class="proj">
             <div class="row">
-              {p.prefix && <span>{p.prefix}</span>}
-              {p.href ? (
-                <a
-                  href={p.href}
-                  target={p.external ? '_blank' : undefined}
-                  rel={p.external ? 'noopener' : undefined}
-                >
-                  {p.name}
-                </a>
-              ) : p.plain ? (
-                <span>{p.name}</span>
-              ) : (
-                <span class="u" title="coming soon">{p.name}</span>
-              )}
-              {p.tagline && <span class="tag"> ({p.tagline})</span>}
+              <span class="label">
+                {p.prefix && <span>{p.prefix}</span>}
+                {p.href ? (
+                  <a
+                    href={p.href}
+                    target={p.external ? '_blank' : undefined}
+                    rel={p.external ? 'noopener' : undefined}
+                  >
+                    {p.name}
+                  </a>
+                ) : p.plain ? (
+                  <span>{p.name}</span>
+                ) : (
+                  <span class="u" title="coming soon">{p.name}</span>
+                )}
+                {p.tagline && <span class="tag"> ({p.tagline})</span>}
+              </span>
               {p.rationale && (
                 <button class="why" type="button" aria-expanded="false" aria-controls={`r-${i}`}>
                   why<span class="caret" aria-hidden="true">›</span>
@@ -72,6 +74,8 @@ import { projects } from '../../data/projects';
     list-style: none;
     margin: 1.4rem 0 0;
     padding: 0;
+    /* a fixed column so every "why" arrow lines up on the same right edge */
+    max-width: 42rem;
   }
 
   .proj {
@@ -79,6 +83,9 @@ import { projects } from '../../data/projects';
   }
 
   .row {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
     line-height: 1.7;
   }
 
@@ -86,14 +93,18 @@ import { projects } from '../../data/projects';
     text-decoration: none;
   }
 
-  /* the rationale toggle: a quiet italic "why" + a caret that rotates open */
+  /* the rationale toggle: a quiet italic "why" + a caret that rotates open.
+     margin-left:auto pushes every arrow to the column's right edge so they align. */
   .why {
     font: inherit;
     font-style: italic;
     color: var(--muted);
     background: none;
     border: 0;
-    padding: 0 0 0 0.55rem;
+    padding: 0;
+    margin-left: auto;
+    flex: none;
+    white-space: nowrap;
     cursor: pointer;
     line-height: 1;
   }
