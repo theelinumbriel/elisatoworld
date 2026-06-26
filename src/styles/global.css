@@ -161,3 +161,60 @@ main {
     animation: none !important;
   }
 }
+
+/* ---- edit-mode login gate ---- */
+.edit-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  backdrop-filter: saturate(160%) blur(10px);
+}
+.edit-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  width: min(20rem, 86vw);
+  padding: 1.6rem 1.6rem 1.4rem;
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 2px;
+}
+.edit-title {
+  font-style: italic;
+}
+.edit-input {
+  font: inherit;
+  color: var(--fg);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #000;
+  border-radius: 0;
+  padding: 0.4rem 0;
+  outline: none;
+}
+.edit-hint {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.edit-error {
+  font-size: 0.82rem;
+  font-style: italic;
+}
+.shake {
+  animation: shake 0.34s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shake { animation: none; }
+}

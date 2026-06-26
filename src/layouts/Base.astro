@@ -42,19 +42,83 @@ const {
     </main>
 
     <script is:inline>
-      // inline editor (the "inline" project, dogfooded): load only when ?edit or
-      // #edit is present, so elisa can edit the site's copy in place, then "copy
-      // changes" to paste back into source. invisible to normal visitors.
+      // inline editor (the "inline" project, dogfooded), gated behind a code so
+      // only elisa can edit. on unlock it loads inline.js wired to the save
+      // endpoint, which commits edits to the repo. invisible to normal visitors.
       (function () {
+        var HASH = '5e26c0d535c1a10b88652b8ad91c4b36b9ece411f7ef92e9dba9247cff089af0';
+        var STORE = 'emdw-edit-code';
         var p = location.pathname.replace(/\/+$/, '');
-        var on = /[?&]edit(?:=1)?(?:&|$)/.test(location.search) ||
+        var wantEdit =
+          /[?&]edit(?:=1)?(?:&|$)/.test(location.search) ||
           location.hash.replace('#', '') === 'edit' ||
-          /(?:^|\/)edit$/.test(p); // supports /edit and /<page>/edit (via vercel rewrite)
-        if (on) {
+          /(?:^|\/)edit$/.test(p);
+        if (!wantEdit) return;
+
+        function sha256hex(str) {
+          return crypto.subtle.digest('SHA-256', new TextEncoder().encode(str)).then(function (buf) {
+            return Array.from(new Uint8Array(buf))
+              .map(function (b) { return b.toString(16).padStart(2, '0'); })
+              .join('');
+          });
+        }
+        function enable(code) {
           var s = document.createElement('script');
           s.src = '/inline.js';
           s.setAttribute('data-auto', '1');
+          s.setAttribute('data-save', '/api/inline-save?code=' + encodeURIComponent(code));
           document.body.appendChild(s);
+        }
+
+        // already unlocked on this device?
+        var saved = null;
+        try { saved = localStorage.getItem(STORE); } catch (e) {}
+        if (saved) {
+          sha256hex(saved).then(function (h) {
+            if (h === HASH) enable(saved);
+            else { try { localStorage.removeItem(STORE); } catch (e) {} gate(); }
+          });
+          return;
+        }
+        gate();
+
+        function gate() {
+          var wrap = document.createElement('div');
+          wrap.className = 'edit-gate';
+          wrap.innerHTML =
+            '<form class="edit-card">' +
+            '<div class="edit-title">edit mode</div>' +
+            '<input class="edit-input" type="password" placeholder="code" autocomplete="off" spellcheck="false" />' +
+            '<div class="edit-hint">this site’s copy is editable inline — for elisa only.</div>' +
+            '<div class="edit-error" hidden>not quite — try again.</div>' +
+            '</form>';
+          document.body.appendChild(wrap);
+          var form = wrap.querySelector('.edit-card');
+          var input = wrap.querySelector('.edit-input');
+          var err = wrap.querySelector('.edit-error');
+          setTimeout(function () { input.focus(); }, 30);
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var code = input.value;
+            sha256hex(code).then(function (h) {
+              if (h === HASH) {
+                try { localStorage.setItem(STORE, code); } catch (e) {}
+                wrap.remove();
+                enable(code);
+              } else {
+                err.hidden = false;
+                form.classList.remove('shake');
+                void form.offsetWidth;
+                form.classList.add('shake');
+                input.value = '';
+                input.focus();
+              }
+            });
+          });
+          wrap.addEventListener('click', function (e) { if (e.target === wrap) wrap.remove(); });
+          document.addEventListener('keydown', function esc(e) {
+            if (e.key === 'Escape') { wrap.remove(); document.removeEventListener('keydown', esc); }
+          });
         }
       })();
     </script>
