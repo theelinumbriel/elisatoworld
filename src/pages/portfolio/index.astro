@@ -110,6 +110,7 @@ import { projects } from '../../data/projects';
   .caret {
     display: inline-block;
     margin-left: 0.25rem;
+    font-style: normal; /* don't inherit the italic from .why — keeps the › upright */
     transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .proj[data-open] .caret {
