@@ -13,14 +13,10 @@ import { projects } from '../../data/projects';
             <div class="row">
               <span class="label">
                 {p.prefix && <span>{p.prefix}</span>}
+                {/* keep the anchor's text content EXACTLY the name — no surrounding
+                    whitespace, or the underline bleeds into the trailing space */}
                 {p.href ? (
-                  <a
-                    href={p.href}
-                    target={p.external ? '_blank' : undefined}
-                    rel={p.external ? 'noopener' : undefined}
-                  >
-                    {p.name}
-                  </a>
+                  <a href={p.href} target={p.external ? '_blank' : undefined} rel={p.external ? 'noopener' : undefined}>{p.name}</a>
                 ) : p.plain ? (
                   <span>{p.name}</span>
                 ) : (
