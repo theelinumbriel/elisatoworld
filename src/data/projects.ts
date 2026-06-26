@@ -30,9 +30,8 @@ export const projects: Project[] = [
   {
     name: 'vox',
     tagline: 'name is provisional and probably a copyright issue',
-    href: null,
+    href: 'https://theelinumbriel.github.io/vox-public/',
     external: true,
-    soon: true,
     rationale:
       'NO MORE BAD AI GENERATED TEXT. THIS IS GOOD AI GENERATED TEXT. you curate a corpus of text you like, this extracts geometric relationships between tokens in this corpus at the clause level, then for any plain text prompt (like you would with chatgpt, e.g. write me a one pager on XYZ), you get an actually good text output. this is byok for now! also please shoot me an email re how you feel about AI and text production broadly',
   },
