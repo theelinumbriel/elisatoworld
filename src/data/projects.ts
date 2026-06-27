@@ -48,6 +48,7 @@ export const projects: Project[] = [
     href: null,
     external: true,
     soon: true,
+    plain: true, // no underline (renders as plain text, like &c)
     rationale:
       'developed a prototype in Xcode using the OpenAI API to generate virtual reality elements from natural language prompts, for applications in gaming. shoot me an email for a demo :)',
   },
