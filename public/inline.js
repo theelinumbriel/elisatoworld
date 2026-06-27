@@ -98,14 +98,24 @@
     });
   }
 
-  // ---- apply saved overrides on every load (so edits persist for viewers) --
+  // ---- apply saved overrides on every load --------------------------------
+  // these bridge the commit -> redeploy gap: a saved edit shows here immediately,
+  // and once the redeployed build catches up (its rendered text == the override)
+  // the override is redundant and dropped, so it can never go stale.
   function applyOverrides() {
-    const keys = Object.keys(store);
-    if (!keys.length) return;
+    if (!Object.keys(store).length) return;
+    let changed = false;
     editableEls().forEach((el) => {
       const k = keyFor(el);
-      if (k in store) el.textContent = store[k];
+      if (!(k in store)) return;
+      if (k in pristine && pristine[k] === store[k]) {
+        delete store[k]; // the live build already has this edit; stop overriding
+        changed = true;
+        return;
+      }
+      el.textContent = store[k];
     });
+    if (changed) save(store);
   }
 
   // ---- edit mode ---------------------------------------------------------
@@ -229,8 +239,11 @@
       document.querySelectorAll(".inline-field").forEach((el) => {
         const k = keyFor(el);
         if (!okKeys || okKeys.has(k)) {
-          el.dataset.inlineOrig = el.textContent; // this text is now in the source...
-          delete store[k]; // ...so it is no longer a pending override to retry/replay
+          // committed: this IS the new source. rebase the baseline, and keep the
+          // override as a bridge so a reload shows it before the redeploy lands;
+          // applyOverrides() drops it automatically once the build catches up.
+          el.dataset.inlineOrig = el.textContent;
+          store[k] = el.textContent;
         }
       });
       save(store);
