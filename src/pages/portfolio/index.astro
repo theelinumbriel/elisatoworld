@@ -25,8 +25,8 @@ import { projects } from '../../data/projects';
                 {p.tagline && <span class="tag"> ({p.tagline})</span>}
               </span>
               {p.rationale && (
-                <button class="why" type="button" aria-expanded="false" aria-controls={`r-${i}`}>
-                  why<span class="caret" aria-hidden="true">›</span>
+                <button class="why" type="button" aria-expanded="false" aria-controls={`r-${i}`} aria-label="show details">
+                  <span class="caret" aria-hidden="true">›</span>
                 </button>
               )}
             </div>
