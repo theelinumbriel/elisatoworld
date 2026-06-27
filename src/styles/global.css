@@ -1,8 +1,8 @@
-/* elisa marie diop-weyer — portfolio
+/* elisa marie diop-weyer -- portfolio
    design tokens lifted from portfolio.pptx:
    white background, black text, helvetica neue, uniform ~18pt, italic titles,
    underlines as styling, generous whitespace. casing is intentional (authored
-   verbatim) — do NOT force lowercase. */
+   verbatim) -- do NOT force lowercase. */
 
 :root {
   --bg: #ffffff;
@@ -52,7 +52,7 @@ a:hover {
   opacity: 0.55;
 }
 
-/* uniform size, never bold — the deck is one weight, one size */
+/* uniform size, never bold -- the deck is one weight, one size */
 h1,
 h2,
 h3 {
@@ -67,7 +67,7 @@ h3 {
   font-style: italic;
 }
 
-/* an underlined word that is not (yet) a link — matches the deck's styled
+/* an underlined word that is not (yet) a link -- matches the deck's styled
    underlines (affiliations, project names before they go live) */
 .u {
   text-decoration: underline;
@@ -81,7 +81,7 @@ p {
 
 /* ---- shared chrome (inner pages) ---- */
 
-/* sticky "liquid glass" top bar — stays visible on scroll, frosts the content
+/* sticky "liquid glass" top bar -- stays visible on scroll, frosts the content
    sliding beneath it. */
 .topbar {
   position: sticky;
@@ -152,7 +152,7 @@ main {
     animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   }
   /* the menu word and its destination title are the same size (1rem). pin the morph
-     snapshots to their natural size — never stretched to fill the tween box — so the
+     snapshots to their natural size -- never stretched to fill the tween box -- so the
      word glides to its spot at a constant size instead of scaling/"exploding". */
   ::view-transition-old(nav-portfolio),
   ::view-transition-new(nav-portfolio),

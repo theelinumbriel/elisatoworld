@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import { projects } from '../../data/projects';
 ---
 
-<Base title="portfolio — elisa marie diop-weyer">
+<Base title="portfolio -- elisa marie diop-weyer">
   <section class="portfolio">
     <h1 class="title" style="view-transition-name: nav-portfolio">portfolio</h1>
     <ul class="list">
@@ -13,7 +13,7 @@ import { projects } from '../../data/projects';
             <div class="row">
               <span class="label">
                 {p.prefix && <span>{p.prefix}</span>}
-                {/* keep the anchor's text content EXACTLY the name — no surrounding
+                {/* keep the anchor's text content EXACTLY the name -- no surrounding
                     whitespace, or the underline bleeds into the trailing space */}
                 {p.href ? (
                   <a href={p.href} target={p.external ? '_blank' : undefined} rel={p.external ? 'noopener' : undefined}>{p.name}</a>
@@ -45,7 +45,7 @@ import { projects } from '../../data/projects';
     <section class="feedback" aria-label="report a bug">
       <p class="fb-note">
         if you happen to use these and run into a bug, please let me know. i promise this
-        box doesn't go to a noreply black box — it lands straight in my inbox, and i'll
+        box doesn't go to a noreply black box -- it lands straight in my inbox, and i'll
         fix it. thanks :)
       </p>
       <form class="fb-form">
@@ -110,7 +110,7 @@ import { projects } from '../../data/projects';
   .caret {
     display: inline-block;
     margin-left: 0.25rem;
-    font-style: normal; /* don't inherit the italic from .why — keeps the › upright */
+    font-style: normal; /* don't inherit the italic from .why -- keeps the › upright */
     transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .proj[data-open] .caret {

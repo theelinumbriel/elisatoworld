@@ -18,14 +18,13 @@ export interface Project {
 }
 
 export const projects: Project[] = [
-  { name: 'maxims', tagline: 'pinterest for words', href: 'https://theelinumbriel.github.io/maxims-public/', external: true },
   {
     name: 'helloword',
     tagline: 'name is provisional',
     href: 'https://theelinumbriel.github.io/helloword/',
     external: true,
     rationale:
-      "i take issue with a lot about the collective slide into vibecoding — but with markdown specifically, two things. one: i believe in keeping a human in the loop, so i like to actually read claude's markdown output, and vscode / windsurf are not a pleasant place to view or edit markdown. two: i want more formatting in markdown than they allow — colour, highlighting, and the like. helloword fixes both: it's basically microsoft word for markdown. surprised it didn't already exist. now it does — yay.",
+      "i take issue with a lot about the collective slide into vibecoding -- but with markdown specifically, two things. one: i believe in keeping a human in the loop, so i like to actually read claude's markdown output, and vscode / windsurf are not a pleasant place to view or edit markdown. two: i want more formatting in markdown than they allow -- colour, highlighting, and the like. helloword fixes both: it's basically microsoft word for markdown. surprised it didn't already exist. now it does -- yay.",
   },
   {
     name: 'vox',
@@ -41,7 +40,7 @@ export const projects: Project[] = [
     href: 'https://github.com/theelinumbriel/inline',
     external: true,
     rationale:
-      "in our vibecode apocalypse, when you want to change a bit of text on your web app or whatever, you have to go edit the file yourself in vscode or prompt your llm to change it. obviously it'd be easier to just edit it inline — so that's what this does. drop the one inline.js onto any page, add ?edit to the url (or press ⌘/ctrl+shift+e), and click any text to edit it in place; hit save to write it straight back to the source file (via the tiny included server), or 'copy changes' to grab the edits as json. (this very site runs it — add ?edit to any page.)",
+      "in our vibecode apocalypse, when you want to change a bit of text on your web app or whatever, you have to go edit the file yourself in vscode or prompt your llm to change it. obviously it'd be easier to just edit it inline -- so that's what this does. drop the one inline.js onto any page, add ?edit to the url (or press ⌘/ctrl+shift+e), and click any text to edit it in place; hit save to write it straight back to the source file (via the tiny included server), or 'copy changes' to grab the edits as json. (this very site runs it -- add ?edit to any page.)",
   },
   {
     name: 'oystr',

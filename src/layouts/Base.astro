@@ -12,7 +12,7 @@ interface Props {
 
 const {
   title = 'elisa marie diop-weyer',
-  description = 'elisa marie diop-weyer — portfolio',
+  description = 'elisa marie diop-weyer -- portfolio',
   home = false,
 } = Astro.props;
 ---
@@ -89,8 +89,8 @@ const {
             '<form class="edit-card">' +
             '<div class="edit-title">edit mode</div>' +
             '<input class="edit-input" type="password" placeholder="code" autocomplete="off" spellcheck="false" />' +
-            '<div class="edit-hint">this site’s copy is editable inline — for elisa only.</div>' +
-            '<div class="edit-error" hidden>not quite — try again.</div>' +
+            '<div class="edit-hint">this site’s copy is editable inline -- for elisa only.</div>' +
+            '<div class="edit-error" hidden>not quite -- try again.</div>' +
             '</form>';
           document.body.appendChild(wrap);
           var form = wrap.querySelector('.edit-card');
@@ -147,7 +147,7 @@ const {
           const ta = form.querySelector('.fb-text') as HTMLTextAreaElement | null;
           const body = (ta?.value || '').trim();
           if (!body) return;
-          const subject = encodeURIComponent('elisatoworld — bug / feedback');
+          const subject = encodeURIComponent('elisatoworld -- bug / feedback');
           window.location.href =
             `mailto:contactemdw@gmail.com?subject=${subject}&body=${encodeURIComponent(body)}`;
         });
