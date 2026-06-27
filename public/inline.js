@@ -42,6 +42,11 @@
     } catch {}
   };
   let store = load();
+  // the server-rendered text of each editable element, captured BEFORE any local
+  // override is painted on. this is what we send as `old`, so the server always
+  // matches against what is really in the source -- never a stale local override
+  // (which would make the server reject the save: "none of the edits were found").
+  let pristine = {};
 
   // ---- element selection -------------------------------------------------
   function isLeafText(el) {
@@ -84,6 +89,15 @@
     return path.join(">");
   }
 
+  // snapshot the true source text of every editable element, before any override
+  // is applied. run once, at boot, ahead of applyOverrides().
+  function snapshotPristine() {
+    editableEls().forEach((el) => {
+      const k = keyFor(el);
+      if (!(k in pristine)) pristine[k] = el.textContent;
+    });
+  }
+
   // ---- apply saved overrides on every load (so edits persist for viewers) --
   function applyOverrides() {
     const keys = Object.keys(store);
@@ -101,7 +115,8 @@
     injectStyles();
     document.body.classList.add("inline-on");
     editableEls().forEach((el) => {
-      el.dataset.inlineOrig = el.textContent;
+      const k = keyFor(el);
+      el.dataset.inlineOrig = k in pristine ? pristine[k] : el.textContent;
       el.setAttribute("contenteditable", PLAINTEXT ? "plaintext-only" : "true");
       el.classList.add("inline-field");
     });
@@ -206,15 +221,20 @@
         return;
       }
 
-      // committed. rebase the baseline ONLY for fields the server actually saved,
-      // so any field it couldn't match stays different from its baseline and is
-      // retried on the next Save (a miss is never silently dropped). overrides are
-      // kept locally so a reload in edit mode shows the change at once, bridging
-      // the commit -> redeploy gap before the live HTML catches up.
+      // for fields the server actually committed: rebase the baseline and drop the
+      // local override (the text now lives in the source). fields it could NOT match
+      // keep their override and their pristine baseline, so they retry on the next
+      // Save and are never silently dropped.
       const okKeys = data.committed ? new Set(data.committed) : null;
       document.querySelectorAll(".inline-field").forEach((el) => {
-        if (!okKeys || okKeys.has(keyFor(el))) el.dataset.inlineOrig = el.textContent;
+        const k = keyFor(el);
+        if (!okKeys || okKeys.has(k)) {
+          el.dataset.inlineOrig = el.textContent; // this text is now in the source...
+          delete store[k]; // ...so it is no longer a pending override to retry/replay
+        }
       });
+      save(store);
+      updateCount();
       const missed = (data.misses && data.misses.length) || 0;
       if (missed) {
         flashBtn(btn, "saved " + (data.replaced || 0) + "/" + edits.length + " · retry to finish", 3200);
@@ -314,6 +334,7 @@
 
   // ---- boot --------------------------------------------------------------
   function boot() {
+    snapshotPristine();
     applyOverrides();
     const wantEdit =
       cfg.auto === "1" ||
