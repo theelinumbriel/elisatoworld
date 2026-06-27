@@ -1,5 +1,5 @@
 /*!
- * inline — edit the text on any page, in place. zero dependencies, one file.
+ * inline -- edit the text on any page, in place. zero dependencies, one file.
  *
  * drop it in:
  *   <script src="inline.js"></script>
@@ -18,7 +18,7 @@
   const cfg = (script && script.dataset) || {};
 
   // editable element types. we only ever touch *leaf* text (an element with no
-  // child elements), so structure and markup are never mangled — "just the text".
+  // child elements), so structure and markup are never mangled -- "just the text".
   const SELECTOR =
     cfg.selector ||
     "h1,h2,h3,h4,h5,h6,p,li,blockquote,figcaption,a,span,small,em,strong,td,th,dd,dt,label,button";
@@ -189,22 +189,46 @@
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ path: location.pathname, edits }),
       });
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      // success: the file is now the source of truth — bake new values as the
-      // baseline and clear the local override cache.
+      let data = {};
+      try {
+        data = await res.json();
+      } catch {}
+
+      if (!res.ok || !data.ok) {
+        // a real response, but the server refused (bad code, missing token, or
+        // none of the edits matched the source). surface WHY instead of crying
+        // "no save server", and keep every edit so nothing is lost.
+        const why = (data && data.error) || "HTTP " + res.status;
+        flashBtn(btn, "save failed", 3200);
+        const c = document.getElementById("inline-count");
+        if (c) c.textContent = "save failed: " + why;
+        console.warn("[inline] save failed: " + why, data);
+        return;
+      }
+
+      // committed. rebase the baseline ONLY for fields the server actually saved,
+      // so any field it couldn't match stays different from its baseline and is
+      // retried on the next Save (a miss is never silently dropped). overrides are
+      // kept locally so a reload in edit mode shows the change at once, bridging
+      // the commit -> redeploy gap before the live HTML catches up.
+      const okKeys = data.committed ? new Set(data.committed) : null;
       document.querySelectorAll(".inline-field").forEach((el) => {
-        el.dataset.inlineOrig = el.textContent;
+        if (!okKeys || okKeys.has(keyFor(el))) el.dataset.inlineOrig = el.textContent;
       });
-      store = {};
-      save(store);
-      updateCount();
-      flashBtn(btn, "saved ✓");
+      const missed = (data.misses && data.misses.length) || 0;
+      if (missed) {
+        flashBtn(btn, "saved " + (data.replaced || 0) + "/" + edits.length + " · retry to finish", 3200);
+        console.warn("[inline] these edits weren't found in source (kept, will retry):", data.misses);
+      } else {
+        flashBtn(btn, "saved ✓ · deploying…");
+      }
     } catch (err) {
-      flashBtn(btn, "no save server", 2400);
+      // fetch itself threw: offline, or no endpoint (e.g. `astro dev` with no
+      // serverless runtime). the edits stay in this browser.
+      flashBtn(btn, "no save server", 2600);
       console.warn(
-        "[inline] save failed. run the inline server (`node server.js`) to write " +
-          "files on disk, or set data-save to your own endpoint. meanwhile, " +
-          "'copy changes' gives you the JSON to paste into source.",
+        "[inline] couldn't reach the save endpoint. on the deployed site this is " +
+          "/api/inline-save; locally, use 'copy changes' to grab the JSON.",
         err
       );
     } finally {
