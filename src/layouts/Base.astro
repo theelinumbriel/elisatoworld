@@ -147,23 +147,46 @@ const {
         });
 
         // baseline-grid easter egg: "g" toggles a faint overlay of the leading
-        // grid. session-scoped so it survives view-transition navigations.
+        // grid, anchored so the lines sit exactly under the letters.
+        // session-scoped so it survives view-transition navigations.
         const gridOn = () => {
           try { return sessionStorage.getItem('emdw-grid') === '1'; } catch { return false; }
         };
-        const applyGrid = () => {
-          document.querySelector('.baseline-grid')?.toggleAttribute('hidden', !gridOn());
+        const placeGrid = () => {
+          const grid = document.querySelector('.baseline-grid') as HTMLElement | null;
+          if (!grid) return;
+          const hide = !gridOn();
+          grid.toggleAttribute('hidden', hide);
+          if (hide) return;
+          // a zero-size inline probe's bottom sits exactly on the text baseline
+          const ref = document.querySelector('main h1, main p') || document.body;
+          const probe = document.createElement('span');
+          probe.style.cssText =
+            'display:inline-block;width:0;height:0;margin:0;padding:0;border:0;vertical-align:baseline';
+          ref.insertBefore(probe, ref.firstChild);
+          const baseline = probe.getBoundingClientRect().top + window.scrollY;
+          probe.remove();
+          const pitch = parseFloat(getComputedStyle(document.body).lineHeight);
+          if (!pitch) return;
+          // line's top edge on the baseline, snapped to the device-pixel grid
+          // so every hairline renders crisp instead of smearing across two
+          const dpr = window.devicePixelRatio || 1;
+          const phase = Math.round((((baseline % pitch) + pitch) % pitch) * dpr) / dpr;
+          grid.style.setProperty('--grid-pitch', `${pitch}px`);
+          grid.style.setProperty('--grid-phase', `${Math.min(phase, pitch - 1)}px`);
         };
         document.addEventListener('keydown', (e) => {
           if (e.key !== 'g' || e.metaKey || e.ctrlKey || e.altKey) return;
           const t = e.target as HTMLElement | null;
           if (t && t.closest('input, textarea, select, [contenteditable]')) return;
           try { sessionStorage.setItem('emdw-grid', gridOn() ? '0' : '1'); } catch {}
-          applyGrid();
+          placeGrid();
         });
-        // the overlay div is re-rendered on every (SPA) navigation -- re-apply
-        document.addEventListener('astro:page-load', applyGrid);
-        applyGrid();
+        // the overlay div is re-rendered on every (SPA) navigation -- re-apply;
+        // re-measure on resize because the root font-size is fluid
+        document.addEventListener('astro:page-load', placeGrid);
+        window.addEventListener('resize', placeGrid);
+        placeGrid();
 
         // portfolio: feedback box -> straight to elisa's inbox (no noreply black box)
         document.addEventListener('submit', (e) => {

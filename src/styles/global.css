@@ -39,6 +39,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   min-height: 100vh;
+  /* containing block for the baseline-grid overlay (absolute, inset 0) */
+  position: relative;
 }
 
 a {
@@ -150,17 +152,24 @@ main {
 }
 
 /* ---- baseline grid (press "g") ----
-   a faint overlay of the leading grid, one hairline per line of body text.
-   pointer-transparent; sits above the chrome but below the edit gate.
-   the 1lh declaration wins where the unit is supported; 1.5rem (the same
-   pitch, spelled out) covers the rest. */
+   a faint overlay of the leading grid, one hairline per line of body text,
+   drawn in document coordinates (absolute, inside the relative body) so it
+   scrolls with the text instead of sliding under it. the script in Base.astro
+   measures the first baseline in main and sets --grid-phase/--grid-pitch so
+   each line sits exactly under the letters, snapped to device pixels so every
+   hairline renders crisp. without JS it falls back to an unanchored 1lh
+   rhythm. pointer-transparent; above the chrome, below the edit gate. */
 .baseline-grid {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 999;
   pointer-events: none;
-  background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 1.5rem);
-  background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 1lh);
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 var(--grid-phase, 0px),
+    rgba(0, 0, 0, 0.12) var(--grid-phase, 0px) calc(var(--grid-phase, 0px) + 1px),
+    transparent calc(var(--grid-phase, 0px) + 1px) var(--grid-pitch, 1lh)
+  );
 }
 
 .baseline-grid[hidden] {

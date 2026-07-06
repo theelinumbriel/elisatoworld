@@ -64,7 +64,8 @@ import { projects } from '../../data/projects';
 
   .list {
     list-style: none;
-    margin: 1.4rem 0 0;
+    /* one full grid line below the title keeps the rows on the baseline grid */
+    margin: 1.5rem 0 0;
     padding: 0;
     /* a fixed column so every "why" arrow lines up on the same right edge */
     max-width: 42rem;
@@ -88,7 +89,8 @@ import { projects } from '../../data/projects';
     display: flex;
     align-items: baseline;
     gap: 1rem;
-    line-height: 1.7;
+    /* the site's leading (1.5) so every row baseline sits on the grid */
+    line-height: 1.5;
   }
 
   .tag {
@@ -154,7 +156,10 @@ import { projects } from '../../data/projects';
     padding: 0.6rem 0 0.9rem;
     max-width: 42rem;
     color: var(--muted);
-    line-height: 1.6;
+    /* 1.5 keeps the rationale's own lines in grid rhythm; its 0.6 + 0.9
+       paddings sum to one grid unit, so everything below an open dropdown
+       lands back on the grid */
+    line-height: 1.5;
     /* the text arrives a beat after the space opens; leaves instantly */
     opacity: 0;
     transition: opacity 0.28s ease;
@@ -174,14 +179,15 @@ import { projects } from '../../data/projects';
 
   /* feedback box */
   .feedback {
-    margin-top: 3.5rem;
+    /* grid multiples; the padding gives back the border's pixel */
+    margin-top: 3rem;
     max-width: 42rem;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
-    padding-top: 1.4rem;
+    padding-top: calc(1.5rem - 1px);
   }
   .fb-note {
     color: var(--muted);
-    line-height: 1.6;
+    line-height: 1.5;
     margin: 0 0 0.9rem;
   }
   .fb-form {
