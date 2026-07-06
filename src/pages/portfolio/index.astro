@@ -74,6 +74,16 @@ import { projects } from '../../data/projects';
     margin: 0;
   }
 
+  /* gallery dimming: pointing at one project lowers the lights on the rest */
+  @media (hover: hover) and (pointer: fine) {
+    .proj {
+      transition: opacity 0.25s ease;
+    }
+    .list:has(.proj:hover) .proj:not(:hover) {
+      opacity: 0.35;
+    }
+  }
+
   .row {
     display: flex;
     align-items: baseline;
@@ -122,6 +132,20 @@ import { projects } from '../../data/projects';
   .proj[data-open] .rationale {
     grid-template-rows: 1fr;
   }
+  /* where the platform can interpolate to height:auto natively, retire the
+     grid-rows hack (kept above as the fallback) and animate real height */
+  @supports (interpolate-size: allow-keywords) {
+    .rationale {
+      display: block;
+      interpolate-size: allow-keywords;
+      height: 0;
+      overflow: clip;
+      transition: height 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .proj[data-open] .rationale {
+      height: auto;
+    }
+  }
   .rationale-inner {
     overflow: hidden;
   }
@@ -131,6 +155,21 @@ import { projects } from '../../data/projects';
     max-width: 42rem;
     color: var(--muted);
     line-height: 1.6;
+    /* the text arrives a beat after the space opens; leaves instantly */
+    opacity: 0;
+    transition: opacity 0.28s ease;
+  }
+  .proj[data-open] .rationale-inner p {
+    opacity: 1;
+    transition-delay: 0.08s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .caret,
+    .rationale,
+    .rationale-inner p {
+      transition: none;
+    }
   }
 
   /* feedback box */

@@ -41,6 +41,9 @@ const {
       <slot />
     </main>
 
+    {/* baseline-grid easter egg: press "g" to overlay the leading grid */}
+    <div class="baseline-grid" hidden aria-hidden="true"></div>
+
     <script is:inline>
       // inline editor (the "inline" project, dogfooded), gated behind a code so
       // only elisa can edit. on unlock it loads inline.js wired to the save
@@ -142,6 +145,25 @@ const {
           const open = proj.toggleAttribute('data-open');
           btn.setAttribute('aria-expanded', String(open));
         });
+
+        // baseline-grid easter egg: "g" toggles a faint overlay of the leading
+        // grid. session-scoped so it survives view-transition navigations.
+        const gridOn = () => {
+          try { return sessionStorage.getItem('emdw-grid') === '1'; } catch { return false; }
+        };
+        const applyGrid = () => {
+          document.querySelector('.baseline-grid')?.toggleAttribute('hidden', !gridOn());
+        };
+        document.addEventListener('keydown', (e) => {
+          if (e.key !== 'g' || e.metaKey || e.ctrlKey || e.altKey) return;
+          const t = e.target as HTMLElement | null;
+          if (t && t.closest('input, textarea, select, [contenteditable]')) return;
+          try { sessionStorage.setItem('emdw-grid', gridOn() ? '0' : '1'); } catch {}
+          applyGrid();
+        });
+        // the overlay div is re-rendered on every (SPA) navigation -- re-apply
+        document.addEventListener('astro:page-load', applyGrid);
+        applyGrid();
 
         // portfolio: feedback box -> straight to elisa's inbox (no noreply black box)
         document.addEventListener('submit', (e) => {

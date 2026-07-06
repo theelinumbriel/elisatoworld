@@ -137,6 +137,36 @@ main {
   opacity: 1;
 }
 
+/* gallery dimming: pointing at one nav word lowers the house lights on the
+   others (museum lighting). hover-capable pointers only, so touch never
+   sticks a dimmed state. */
+@media (hover: hover) and (pointer: fine) {
+  .nav a {
+    transition: opacity 0.22s ease;
+  }
+  .nav:has(a:hover) a:not(:hover) {
+    opacity: 0.35;
+  }
+}
+
+/* ---- baseline grid (press "g") ----
+   a faint overlay of the leading grid, one hairline per line of body text.
+   pointer-transparent; sits above the chrome but below the edit gate.
+   the 1lh declaration wins where the unit is supported; 1.5rem (the same
+   pitch, spelled out) covers the rest. */
+.baseline-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 1.5rem);
+  background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 1lh);
+}
+
+.baseline-grid[hidden] {
+  display: none;
+}
+
 /* ---- view transitions: the "title morph" ----
    the clicked menu word shares a view-transition-name with the destination
    page's title, so the browser tweens it from the centered menu to the
