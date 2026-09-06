@@ -24,7 +24,7 @@ export const projects: Project[] = [
     href: 'https://theelinumbriel.github.io/helloword/',
     external: true,
     rationale:
-      "i take issue with a lot about our collective slide into vibecoding, but with midtown specifically, two things. one: i'm a big believer in the human in the loop of it all, so i like to actually read claude's markdown output, and vscode / windsurf are not a pleasant place to view or edit markdown. two: i want more formatting in markdown than they allow e.g. color, highlighting, etc. helloword fixes both: it's basically microsoft word for markdown. surprised it didn't already exist. now it does, yay!",
+      "i take issue with a lot about our collective slide into vibecoding. two things. one: i'm a big believer in the human in the loop of it all, so i like to actually read claude's markdown output, and vscode / windsurf are not a pleasant place to view or edit markdown. two: i want more formatting in markdown than they allow e.g. color, highlighting, etc. helloword fixes both: it's basically microsoft word for markdown. surprised it didn't already exist. now it does, yay!",
   },
   {
     name: 'vox',
@@ -32,7 +32,7 @@ export const projects: Project[] = [
     href: 'https://theelinumbriel.github.io/vox-public/',
     external: true,
     rationale:
-      'NO MORE BAD AI GENERATED TEXT. THIS IS GOOD AI GENERATED TEXT. you curate a corpus of text you like, this extracts geometric relationships between tokens in this corpus at the clause level, then for any plain text prompt (like you would with chatgpt, e.g. write me a one pager on XYZ), you get an actually good text output. this is byok for now! also please shoot me an email re how you feel about AI and text production broadly',
+      'NO MORE BAD AI GENERATED TEXT. THIS IS GOOD AI GENERATED TEXT. you curate a corpus of text you like, this extracts geometric relationships between tokens in this corpus at the clause level, then for any natural language prompt (like you would with chatgpt, e.g. write me a one pager on XYZ), you get an actually good text output. this is byok for now! also please shoot me an email re how you feel about AI and text production broadly',
   },
   {
     name: 'inline',
